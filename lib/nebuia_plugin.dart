@@ -20,6 +20,12 @@ class NebuiaPlugin {
     });
   }
 
+  static set setClientURI(String uri) {
+    _channel.invokeMethod('setClientURI', {
+      'uri': uri
+    });
+  }
+
   static set setTemporalCode(String code) {
     _channel.invokeMethod('setTemporalCode', {
       'code': code

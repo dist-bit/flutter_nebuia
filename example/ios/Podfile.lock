@@ -1,11 +1,11 @@
 PODS:
   - Cartography (3.1.0)
   - Flutter (1.0.0)
-  - NebuIA (0.0.5):
+  - NebuIA (0.0.6):
     - Cartography (~> 3.0)
   - nebuia_plugin (0.0.1):
     - Flutter
-    - NebuIA (~> 0.0.5)
+    - NebuIA (~> 0.0.6)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -25,8 +25,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Cartography: 1988b7578871a56c036e7af17195cb2190edf18c
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  NebuIA: 2db537fa4b92a512e9a8af7d869337df5fb4c2dd
-  nebuia_plugin: 690cf7db55f0ba77abe3bd597e165b661ad802c2
+  NebuIA: 7be135307485229652acd0fbd034c2b115a5db1b
+  nebuia_plugin: ae026d2a7fbd341bbc46a607b0e89e0862ea493f
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 

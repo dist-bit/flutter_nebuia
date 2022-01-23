@@ -24,6 +24,11 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             SwiftNebuiaPlugin.nebuIA.setReport(report: report)
             result(true)
             break
+        case "setClientURI":
+            let uri: String = data["uri"] as! String;
+            SwiftNebuiaPlugin.nebuIA.setClientURI(uri: uri)
+            result(true)
+            break
         case "setTemporalCode":
             let code: String = data["code"] as! String;
             SwiftNebuiaPlugin.nebuIA.setCode(code: code)

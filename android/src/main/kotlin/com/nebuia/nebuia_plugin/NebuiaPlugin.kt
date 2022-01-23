@@ -55,6 +55,11 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
         plugin.setReport(report)
         result.success(true)
       }
+      "setClientURI" -> {
+        val uri: String = data["uri"] as String
+        plugin.setClientURI(uri)
+        result.success(true)
+      }
       "setTemporalCode" -> {
         val code: String = data["code"] as String
         plugin.setTemporalCode(code)

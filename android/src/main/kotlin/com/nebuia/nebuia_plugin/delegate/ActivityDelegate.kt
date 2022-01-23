@@ -35,6 +35,10 @@ class ActivityDelegate internal constructor(
         )
     }
 
+    fun setClientURI(uri: String) {
+        nebuIA.setClientURI(uri)
+    }
+
     fun setReport(report: String) {
         nebuIA.setReport(report)
     }
