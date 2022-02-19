@@ -1,10 +1,25 @@
-
 import 'dart:async';
 import 'dart:collection';
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
+
+class Fingers {
+  final Finger index;
+  final Finger middle;
+  final Finger ring;
+  final Finger little;
+  Fingers(this.index, this.middle, this.ring, this.little);
+
+}
+
+class Finger {
+  final Uint8List image;
+  final num score;
+
+  Finger(this.image, this.score);
+
+}
 
 class NebuiaPlugin {
   static const MethodChannel _channel = MethodChannel('nebuia_plugin');
@@ -41,12 +56,23 @@ class NebuiaPlugin {
     await _channel.invokeMethod('faceLiveDetection', {});
   }
 
-  static Future<LinkedHashMap?> fingerDetection(int hand) async {
+  static Future<Fingers?> fingerDetection(int hand) async {
+    print(hand);
     final LinkedHashMap? fingers = await _channel.invokeMethod('fingerDetection', {
       'hand': hand
     });
 
-    return fingers;
+    if(fingers != null) {
+      Finger index =  Finger(fingers['index']['image'], fingers['index']['score']);
+      Finger middle =  Finger(fingers['middle']['image'], fingers['middle']['score']);
+      Finger ring =  Finger(fingers['ring']['image'], fingers['ring']['score']);
+      Finger little =  Finger(fingers['little']['image'], fingers['little']['score']);
+
+      return Fingers(index, middle, ring, little);
+    }
+
+
+    return null;
   }
 
   static Future<Uint8List?> generateWSQFingerprint(Uint8List image) async {
@@ -65,8 +91,8 @@ class NebuiaPlugin {
     return path;
   }
 
-  static Future<void> get documentDetection async {
-    await _channel.invokeMethod('documentDetection', {});
+  static Future<bool> get documentDetection async {
+    return await _channel.invokeMethod('documentDetection', {});
   }
 
   static Future<LinkedHashMap?> get captureAddressProof async {

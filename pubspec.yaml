@@ -1,7 +1,7 @@
 name: nebuia_plugin
 description: NebuIA Plugin
 version: 0.0.1
-homepage:
+homepage: "https://nebuia.com"
 
 environment:
   sdk: ">=2.15.1 <3.0.0"

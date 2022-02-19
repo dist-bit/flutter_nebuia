@@ -14,6 +14,7 @@ import com.distbit.nebuia_plugin.model.Side
 import com.distbit.nebuia_plugin.model.ui.Theme
 import java.nio.ByteBuffer
 import android.R.attr.bitmap
+import com.distbit.nebuia_plugin.model.Fingers
 import java.io.ByteArrayOutputStream
 
 
@@ -60,12 +61,24 @@ class ActivityDelegate internal constructor(
     }
 
     fun fingerDetection(hand: Int, result: MethodChannel.Result) {
-        nebuIA.fingerDetection(hand) { index, middle, ring, little: Bitmap ->
-            val fingers:HashMap<String, ByteArray> = HashMap()
-            fingers["index"] = index.convertToByteArray()
-            fingers["middle"] = middle.convertToByteArray()
-            fingers["ring"] = ring.convertToByteArray()
-            fingers["little"] = little.convertToByteArray()
+        nebuIA.fingerDetection(hand) { index, middle, ring, little: Fingers ->
+            val fingers:HashMap<String, HashMap<String, Any>> = HashMap()
+            fingers["index"] = hashMapOf(
+                    "score" to index.score,
+                    "image" to index.image.convertToByteArray()
+            )
+            fingers["middle"] = hashMapOf(
+                    "score" to middle.score,
+                    "image" to middle.image.convertToByteArray()
+            )
+            fingers["ring"] = hashMapOf(
+                    "score" to ring.score,
+                    "image" to ring.image.convertToByteArray()
+            )
+            fingers["little"] = hashMapOf(
+                    "score" to little.score,
+                    "image" to little.image.convertToByteArray()
+            )
             result.success(fingers)
         }
     }

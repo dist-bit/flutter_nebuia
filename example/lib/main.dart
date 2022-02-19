@@ -31,8 +31,11 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    NebuiaPlugin.setReport = "612bcf0872427b3dac16237c";
-    NebuiaPlugin.setTemporalCode = "09923375";
+    NebuiaPlugin.setReport = "61ef054041522a08818e3265";
+    NebuiaPlugin.setTemporalCode = "98595191";
+    //NebuiaPlugin.setClientURI = "http://192.168.1.104:3000/api/v1/services";
+    Fingers? fingers = await NebuiaPlugin.fingerDetection(0);
+    print(fingers);
     /* String? videoPath = await NebuiaPlugin.recordActivity(['TEXTO 1', 'TEXTO 2']);
     if(videoPath != null) {
       print(videoPath);

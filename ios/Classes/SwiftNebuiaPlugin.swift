@@ -47,12 +47,34 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
         case "fingerDetection":
             let hand: Int = data["hand"] as! Int;
             SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand) { index, middle, ring, little in
-                let fingers: Dictionary = [
-                    "index" :  FlutterStandardTypedData(bytes: index.jpegData(compressionQuality: 1.0)!),
-                    "middle" :  FlutterStandardTypedData(bytes: index.jpegData(compressionQuality: 1.0)!),
-                    "ring" :  FlutterStandardTypedData(bytes: index.jpegData(compressionQuality: 1.0)!),
-                    "little" :  FlutterStandardTypedData(bytes: index.jpegData(compressionQuality: 1.0)!),
+                
+                let index: [String : Any] = [
+                    "image": FlutterStandardTypedData(bytes: index.image!.jpegData(compressionQuality: 1.0)!),
+                    "score": index.score
                 ]
+                
+                let middle: [String : Any] = [
+                    "image": FlutterStandardTypedData(bytes: middle.image!.jpegData(compressionQuality: 1.0)!),
+                    "score": middle.score
+                ]
+                
+                let ring: [String : Any] = [
+                    "image": FlutterStandardTypedData(bytes: ring.image!.jpegData(compressionQuality: 1.0)!),
+                    "score": ring.score
+                ]
+                
+                let little: [String : Any] = [
+                    "image": FlutterStandardTypedData(bytes: little.image!.jpegData(compressionQuality: 1.0)!),
+                    "score": little.score
+                ]
+                
+                let fingers: [String : Any] = [
+                    "index" : index,
+                    "middle" :  middle,
+                    "ring" :  ring,
+                    "little" :  little,
+                ]
+                
                 result(fingers)
                 
             }
