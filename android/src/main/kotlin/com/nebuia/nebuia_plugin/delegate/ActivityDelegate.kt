@@ -55,7 +55,7 @@ class ActivityDelegate internal constructor(
     }
 
     fun faceLiveDetection(result: MethodChannel.Result) {
-        val response = false
+        var response = false
         nebuIA.faceLiveDetection {
             if(!response) {
                 result.success(true)
