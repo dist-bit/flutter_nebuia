@@ -56,7 +56,7 @@ class ActivityDelegate internal constructor(
 
     fun faceLiveDetection(result: MethodChannel.Result) {
         nebuIA.faceLiveDetection {
-            result.success(false)
+            result.success(true)
         }
     }
 

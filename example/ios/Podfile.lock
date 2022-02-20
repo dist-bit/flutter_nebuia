@@ -10,12 +10,12 @@ PODS:
   - libwebp/mux (1.2.1):
     - libwebp/demux
   - libwebp/webp (1.2.1)
-  - NebuIA (0.0.10):
+  - NebuIA (0.0.11):
     - Cartography (~> 3.0)
     - SDWebImageWebPCoder
   - nebuia_plugin (0.0.1):
     - Flutter
-    - NebuIA (~> 0.0.10)
+    - NebuIA (~> 0.0.11)
   - SDWebImage/Core (5.12.3)
   - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
@@ -43,8 +43,8 @@ SPEC CHECKSUMS:
   Cartography: 1988b7578871a56c036e7af17195cb2190edf18c
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
-  NebuIA: 3c2fefe3c3f7e4041ca50b3db6747cf4dd092a76
-  nebuia_plugin: c87d50576fbf75f851d5ce7512a5c9f39192b1db
+  NebuIA: e51b2724bcde2b756d709753e521d5ac1f94f3f4
+  nebuia_plugin: a7a09863638f1784a29ca2e55ecd484622173a78
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
 

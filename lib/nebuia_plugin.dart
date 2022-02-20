@@ -52,12 +52,12 @@ class NebuiaPlugin {
     return report;
   }
 
-  static Future<void> get faceLiveDetection async {
-    await _channel.invokeMethod('faceLiveDetection', {});
+  static Future<bool?> get faceLiveDetection async {
+    final bool? status = await _channel.invokeMethod('faceLiveDetection', {});
+    return status;
   }
 
   static Future<Fingers?> fingerDetection(int hand) async {
-    print(hand);
     final LinkedHashMap? fingers = await _channel.invokeMethod('fingerDetection', {
       'hand': hand
     });
