@@ -100,12 +100,12 @@ class NebuiaPlugin {
     return address;
   }
 
-  static Future<bool> saveAddress(String address) async {
-    final bool status = await _channel.invokeMethod('saveAddress', {
+  static Future<LinkedHashMap?> saveAddress(String address) async {
+    final LinkedHashMap? result = await _channel.invokeMethod('saveAddress', {
       'address': address
     });
 
-    return status;
+    return result;
   }
 
   static Future<bool> saveEmail(String email) async {
