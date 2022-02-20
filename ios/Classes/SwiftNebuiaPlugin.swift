@@ -40,8 +40,12 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             }
             break
         case "faceLiveDetection":
+            var response: Bool = false
             SwiftNebuiaPlugin.nebuIA.faceProof {
-                result(true)
+                if(!response) {
+                    result(true)
+                    response = true
+                }
             }
             break
         case "fingerDetection":
