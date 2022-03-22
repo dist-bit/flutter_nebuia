@@ -48,11 +48,11 @@ Add public and private key to your values.xml
 ```
 
 Add public and private key to your Info.plist
-```plist
-    <key>NebuIAPublicKey</key>
-	<string>S5PS103-RHWM8E8-*******-7GQ0NX1</string>
-	<key>NebuIASecretKey</key>
-	<string>c96d9080-c479-4439-****-b1523c2e0af4</string>
+```xml
+<key>NebuIAPublicKey</key>
+<string>S5PS103-RHWM8E8-*******-7GQ0NX1</string>
+<key>NebuIASecretKey</key>
+<string>c96d9080-c479-4439-****-b1523c2e0af4</string>
 ```
 
 Sample Integration
