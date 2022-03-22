@@ -50,7 +50,7 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             break
         case "fingerDetection":
             let hand: Int = data["hand"] as! Int;
-            SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand) { index, middle, ring, little in
+            SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand, completion: { index, middle, ring, little in
                 
                 let index: [String : Any] = [
                     "image": FlutterStandardTypedData(bytes: index.image!.jpegData(compressionQuality: 1.0)!),
@@ -81,7 +81,9 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
                 
                 result(fingers)
                 
-            }
+            }, skip: {
+                result("skip")
+            })
             break
         case "generateWSQFingerprint":
             let fingerprint: FlutterStandardTypedData = data["image"] as! FlutterStandardTypedData;

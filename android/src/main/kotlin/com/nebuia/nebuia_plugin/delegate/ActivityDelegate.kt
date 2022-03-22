@@ -65,7 +65,7 @@ class ActivityDelegate internal constructor(
     }
 
     fun fingerDetection(hand: Int, result: MethodChannel.Result) {
-        nebuIA.fingerDetection(hand) { index, middle, ring, little: Fingers ->
+        nebuIA.fingerDetection(hand, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
             val fingers:HashMap<String, HashMap<String, Any>> = HashMap()
             fingers["index"] = hashMapOf(
                     "score" to index.score,
@@ -84,7 +84,9 @@ class ActivityDelegate internal constructor(
                     "image" to little.image.convertToByteArray()
             )
             result.success(fingers)
-        }
+        }, onSkip = {
+            result.success("skip")
+        })
     }
 
     fun generateWSQFingerprint(image: ByteArray, result: MethodChannel.Result) {

@@ -5,11 +5,12 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 class Fingers {
-  final Finger index;
-  final Finger middle;
-  final Finger ring;
-  final Finger little;
-  Fingers(this.index, this.middle, this.ring, this.little);
+  final Finger? index;
+  final Finger? middle;
+  final Finger? ring;
+  final Finger? little;
+  bool skip = false;
+  Fingers(this.index, this.middle, this.ring, this.little, this.skip);
 
 }
 
@@ -23,11 +24,6 @@ class Finger {
 
 class NebuiaPlugin {
   static const MethodChannel _channel = MethodChannel('nebuia_plugin');
-
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
 
   static set setReport(String report) {
     _channel.invokeMethod('setReport', {
@@ -58,9 +54,15 @@ class NebuiaPlugin {
   }
 
   static Future<Fingers?> fingerDetection(int hand) async {
-    final LinkedHashMap? fingers = await _channel.invokeMethod('fingerDetection', {
+    final result = await _channel.invokeMethod('fingerDetection', {
       'hand': hand
     });
+
+    if(result.runtimeType.toString() == 'String') {
+      return Fingers(null, null, null, null, true);
+    }
+
+    LinkedHashMap? fingers = result;
 
     if(fingers != null) {
       Finger index =  Finger(fingers['index']['image'], fingers['index']['score']);
@@ -68,7 +70,7 @@ class NebuiaPlugin {
       Finger ring =  Finger(fingers['ring']['image'], fingers['ring']['score']);
       Finger little =  Finger(fingers['little']['image'], fingers['little']['score']);
 
-      return Fingers(index, middle, ring, little);
+      return Fingers(index, middle, ring, little, false);
     }
 
 
