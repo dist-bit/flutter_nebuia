@@ -69,8 +69,8 @@ class NebuiaPlugin {
       Finger middle =  Finger(fingers['middle']['image'], fingers['middle']['score']);
       Finger ring =  Finger(fingers['ring']['image'], fingers['ring']['score']);
       Finger little =  Finger(fingers['little']['image'], fingers['little']['score']);
-
-      return Fingers(index, middle, ring, little, false);
+      bool skip = fingers['skip'];
+      return Fingers(index, middle, ring, little, skip);
     }
 
 

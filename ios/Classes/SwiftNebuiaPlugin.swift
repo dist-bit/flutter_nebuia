@@ -6,6 +6,38 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
     
     static var nebuIA: NebuIA!
     
+    private func buildFingers(index: Finger, middle: Finger, ring: Finger, little: Finger, isSkip: Bool) -> [String : Any] {
+        let index: [String : Any] = [
+            "image": FlutterStandardTypedData(bytes: index.image!.jpegData(compressionQuality: 1.0)!),
+            "score": index.score
+        ]
+        
+        let middle: [String : Any] = [
+            "image": FlutterStandardTypedData(bytes: middle.image!.jpegData(compressionQuality: 1.0)!),
+            "score": middle.score
+        ]
+        
+        let ring: [String : Any] = [
+            "image": FlutterStandardTypedData(bytes: ring.image!.jpegData(compressionQuality: 1.0)!),
+            "score": ring.score
+        ]
+        
+        let little: [String : Any] = [
+            "image": FlutterStandardTypedData(bytes: little.image!.jpegData(compressionQuality: 1.0)!),
+            "score": little.score
+        ]
+        
+        let fingers: [String : Any] = [
+            "index" : index,
+            "middle" :  middle,
+            "ring" :  ring,
+            "little" :  little,
+            "skip": isSkip,
+        ]
+        
+        return fingers
+    }
+    
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "nebuia_plugin", binaryMessenger: registrar.messenger())
@@ -51,36 +83,11 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
         case "fingerDetection":
             let hand: Int = data["hand"] as! Int;
             SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand, completion: { index, middle, ring, little in
-                
-                let index: [String : Any] = [
-                    "image": FlutterStandardTypedData(bytes: index.image!.jpegData(compressionQuality: 1.0)!),
-                    "score": index.score
-                ]
-                
-                let middle: [String : Any] = [
-                    "image": FlutterStandardTypedData(bytes: middle.image!.jpegData(compressionQuality: 1.0)!),
-                    "score": middle.score
-                ]
-                
-                let ring: [String : Any] = [
-                    "image": FlutterStandardTypedData(bytes: ring.image!.jpegData(compressionQuality: 1.0)!),
-                    "score": ring.score
-                ]
-                
-                let little: [String : Any] = [
-                    "image": FlutterStandardTypedData(bytes: little.image!.jpegData(compressionQuality: 1.0)!),
-                    "score": little.score
-                ]
-                
-                let fingers: [String : Any] = [
-                    "index" : index,
-                    "middle" :  middle,
-                    "ring" :  ring,
-                    "little" :  little,
-                ]
-                
+                let fingers = self.buildFingers(index: index, middle: middle, ring: ring, little: little, isSkip: false)
                 result(fingers)
-                
+            }, skipWithFingers: { index, middle, ring, little in
+                let fingers = self.buildFingers(index: index, middle: middle, ring: ring, little: little, isSkip: true)
+                result(fingers)
             }, skip: {
                 result("skip")
             })

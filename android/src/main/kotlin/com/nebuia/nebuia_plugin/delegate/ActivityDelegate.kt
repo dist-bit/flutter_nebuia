@@ -66,27 +66,39 @@ class ActivityDelegate internal constructor(
 
     fun fingerDetection(hand: Int, result: MethodChannel.Result) {
         nebuIA.fingerDetection(hand, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
-            val fingers:HashMap<String, HashMap<String, Any>> = HashMap()
-            fingers["index"] = hashMapOf(
-                    "score" to index.score,
-                    "image" to index.image.convertToByteArray()
-            )
-            fingers["middle"] = hashMapOf(
-                    "score" to middle.score,
-                    "image" to middle.image.convertToByteArray()
-            )
-            fingers["ring"] = hashMapOf(
-                    "score" to ring.score,
-                    "image" to ring.image.convertToByteArray()
-            )
-            fingers["little"] = hashMapOf(
-                    "score" to little.score,
-                    "image" to little.image.convertToByteArray()
-            )
+            val fingers = buildFingers(index, middle, ring, little, false)
             result.success(fingers)
         }, onSkip = {
             result.success("skip")
+        }, onSkipWithFingers = { index, middle, ring, little: Fingers ->
+            val fingers = buildFingers(index, middle, ring, little, true)
+            result.success(fingers)
         })
+    }
+
+    // build fingers image
+    private fun buildFingers(index: Fingers, middle: Fingers, ring: Fingers, little: Fingers, isSkip: Boolean): HashMap<String, Any> {
+        val fingers:HashMap<String, Any> = HashMap()
+        fingers["index"] = hashMapOf(
+                "score" to index.score,
+                "image" to index.image.convertToByteArray()
+        )
+        fingers["middle"] = hashMapOf(
+                "score" to middle.score,
+                "image" to middle.image.convertToByteArray()
+        )
+        fingers["ring"] = hashMapOf(
+                "score" to ring.score,
+                "image" to ring.image.convertToByteArray()
+        )
+        fingers["little"] = hashMapOf(
+                "score" to little.score,
+                "image" to little.image.convertToByteArray()
+        )
+
+        fingers["skip"] = isSkip
+
+        return fingers
     }
 
     fun generateWSQFingerprint(image: ByteArray, result: MethodChannel.Result) {
