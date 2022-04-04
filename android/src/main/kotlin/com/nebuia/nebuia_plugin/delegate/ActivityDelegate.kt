@@ -6,14 +6,9 @@ import android.graphics.Bitmap
 import com.distbit.nebuia_plugin.NebuIA
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.PluginRegistry
-import android.R.attr.bitmap
-import android.R.attr.bitmap
-import android.graphics.BitmapFactory
 import android.graphics.BitmapFactory.*
 import com.distbit.nebuia_plugin.model.Side
 import com.distbit.nebuia_plugin.model.ui.Theme
-import java.nio.ByteBuffer
-import android.R.attr.bitmap
 import com.distbit.nebuia_plugin.model.Fingers
 import java.io.ByteArrayOutputStream
 
@@ -64,8 +59,8 @@ class ActivityDelegate internal constructor(
         }
     }
 
-    fun fingerDetection(hand: Int, result: MethodChannel.Result) {
-        nebuIA.fingerDetection(hand, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
+    fun fingerDetection(hand: Int, skip: Boolean, quality: Double, result: MethodChannel.Result) {
+        nebuIA.fingerDetection(hand, skip, quality, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
             val fingers = buildFingers(index, middle, ring, little, false)
             result.success(fingers)
         }, onSkip = {
@@ -140,7 +135,7 @@ class ActivityDelegate internal constructor(
     }
 
     fun savePhone(phone: String, result: MethodChannel.Result) {
-        nebuIA.saveEmail(phone) {
+        nebuIA.savePhone(phone) {
             result.success(it)
         }
     }

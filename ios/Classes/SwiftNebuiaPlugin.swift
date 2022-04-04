@@ -82,7 +82,9 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             break
         case "fingerDetection":
             let hand: Int = data["hand"] as! Int;
-            SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand, completion: { index, middle, ring, little in
+            let quality: Float = data["quality"] as! Float;
+            let skip: Bool = data["skip"] as! Bool;
+            SwiftNebuiaPlugin.nebuIA.fingerprintScanner(hand: hand, skipStep: skip, qualityValue: quality, completion: { index, middle, ring, little in
                 let fingers = self.buildFingers(index: index, middle: middle, ring: ring, little: little, isSkip: false)
                 result(fingers)
             }, skipWithFingers: { index, middle, ring, little in

@@ -1,7 +1,6 @@
 package com.nebuia.nebuia_plugin
 
 import android.app.Activity
-import android.util.Log
 import androidx.annotation.NonNull
 import com.nebuia.nebuia_plugin.delegate.ActivityDelegate
 
@@ -69,7 +68,9 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
       "faceLiveDetection" -> plugin.faceLiveDetection(result)
       "fingerDetection" -> {
         val hand: Int = data["hand"] as Int
-        plugin.fingerDetection(hand, result)
+        val quality: Double = data["quality"] as Double
+        val skip: Boolean = data["skip"] as Boolean
+        plugin.fingerDetection(hand, skip, quality, result)
       }
       "generateWSQFingerprint" -> {
         val image: ByteArray = data["image"] as ByteArray
