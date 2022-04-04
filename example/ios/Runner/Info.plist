@@ -21,9 +21,19 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Necesitamos acceder a tu cámara para poder capturar tu imagen de perfil</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>El acceso a microfono es requerido por la aplicació de la cámara, no grabaremos audio sin tu consentimiento</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Necesitamos acceder a tu galeria para que puedas escoger tu imagen de perfil</string>
+	<key>NebuIAPublicKey</key>
+	<string>0T7ZKDX-0XSTHRM-2SQ1MFK-006R6HD</string>
+	<key>NebuIASecretKey</key>
+	<string>347fcdbd-3b9d-4714-b370-d1f3006c1a2d</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -43,15 +53,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>NebuIAPublicKey</key>
-    <string>0T7ZKDX-0XSTHRM-2SQ1MFK-006R6HD</string>
-    <key>NebuIASecretKey</key>
-    <string>347fcdbd-3b9d-4714-b370-d1f3006c1a2d</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Necesitamos acceder a tu galeria para que puedas escoger tu imagen de perfil</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Necesitamos acceder a tu cámara para poder capturar tu imagen de perfil</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>El acceso a microfono es requerido por la aplicació de la cámara, no grabaremos audio sin tu consentimiento</string>
 </dict>
 </plist>
