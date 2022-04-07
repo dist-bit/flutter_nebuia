@@ -168,4 +168,9 @@ class NebuiaPlugin {
     final Uint8List? idBack = await _channel.invokeMethod('getIDBackImage', { });
     return idBack;
   }
+
+  static Future<LinkedHashMap> get reportData async {
+    final LinkedHashMap data = await _channel.invokeMethod('getReportData', { });
+    return data;
+  }
 }

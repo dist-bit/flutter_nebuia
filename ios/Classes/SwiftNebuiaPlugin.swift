@@ -178,6 +178,11 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
                 result(FlutterStandardTypedData(bytes: image.jpegData(compressionQuality: 1.0)!))
             }
             break
+        case "getReportData":
+            SwiftNebuiaPlugin.nebuIA.getReportIDSummary { data in
+                result(data)
+            }
+            break
         default:
             result("Have you done something new?")
         }

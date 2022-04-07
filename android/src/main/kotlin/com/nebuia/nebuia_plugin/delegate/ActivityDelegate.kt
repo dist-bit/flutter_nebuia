@@ -188,6 +188,12 @@ class ActivityDelegate internal constructor(
         }
     }
 
+    fun getReportData(result: MethodChannel.Result) {
+        nebuIA.getIDData {
+            result.success(it)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         return true
     }

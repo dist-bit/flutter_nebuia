@@ -107,6 +107,7 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
       "getFaceImage" -> plugin.getFaceImage(result)
       "getIDFrontImage" -> plugin.getIDFrontImage(result)
       "getIDBackImage" -> plugin.getIDBackImage(result)
+      "getReportData" -> plugin.getReportData(result)
       else -> result.notImplemented()
     }
   }
