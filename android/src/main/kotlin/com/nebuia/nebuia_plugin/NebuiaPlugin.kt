@@ -78,7 +78,8 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
       }
       "recordActivity" -> {
         val text: ArrayList<String> = data["text"] as ArrayList<String>
-        plugin.recordActivity(text, result)
+        val getNameFromId: Boolean = data["getNameFromId"] as Boolean
+        plugin.recordActivity(text, getNameFromId, result)
       }
       "documentDetection" -> plugin.documentDetection(result)
       "captureAddressProof" -> plugin.captureAddressProof(result)

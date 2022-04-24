@@ -102,8 +102,8 @@ class ActivityDelegate internal constructor(
         }
     }
 
-    fun recordActivity(text: ArrayList<String>, result: MethodChannel.Result) {
-        nebuIA.recordActivity(text) {
+    fun recordActivity(text: ArrayList<String>, getNameFromId: Boolean, result: MethodChannel.Result) {
+        nebuIA.recordActivity(text, getNameFromId) {
             result.success(it.absolutePath)
         }
     }
