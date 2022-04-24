@@ -103,7 +103,8 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             break
         case "recordActivity":
             let text:  Array<String> = data["text"] as! Array<String>;
-            SwiftNebuiaPlugin.nebuIA.signerVideo(text: text) { path in
+            let getNameFromId: Bool = data["getNameFromId"] as! Bool;
+            SwiftNebuiaPlugin.nebuIA.signerVideo(text: text, getNameFromId: getNameFromId) { path in
                 result(path)
             }
             break
