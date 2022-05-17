@@ -87,9 +87,10 @@ class NebuiaPlugin {
     return wsq;
   }
 
-  static Future<String?> recordActivity(List<String> text) async {
+  static Future<String?> recordActivity(List<String> text, bool getNameFromId) async {
     final String? path = await _channel.invokeMethod('recordActivity', {
-      'text': text
+      'text': text,
+      'getNameFromId': getNameFromId
     });
 
     return path;
