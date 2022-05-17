@@ -22,8 +22,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    //NebuiaPlugin.setClientURI = "http://192.168.1.104:3000/api/v1/services";
+    NebuiaPlugin.setTemporalCode = "000000";
+    // SET CLIENT REPORT
+    //nebuIA.setReport("62422330ad9791096fd9c4fe")
     NebuiaPlugin.setReport = "62422330ad9791096fd9c4fe";
-    NebuiaPlugin.setTemporalCode = "98595191";
   }
 
   Widget _card(
@@ -104,16 +107,18 @@ class _MyAppState extends State<MyApp> {
                                     item: Verification.email)),
                           );
                         }),
-                        _card(Icons.phone_android_outlined, 'Verificar teléfono',
+                        _card(
+                            Icons.phone_android_outlined,
+                            'Verificar teléfono',
                             'Verifica tu teléfono mediante OTP', () async {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const FormPage(
-                                        title: 'Verificar teléfono',
-                                        item: Verification.phone)),
-                              );
-                            }),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const FormPage(
+                                    title: 'Verificar teléfono',
+                                    item: Verification.phone)),
+                          );
+                        }),
                         _card(Icons.face, 'Prueba de vida',
                             'Verificación facial y prueba de vida', () async {
                           bool? result = await NebuiaPlugin.faceLiveDetection;
@@ -190,7 +195,7 @@ class _FormPageState extends State<FormPage> {
       return 'Ingresa un número valido';
     }
 
-    if(!value!.startsWith('+')) {
+    if (!value!.startsWith('+')) {
       return 'El número debe iniciar con el código de país';
     }
 
@@ -218,13 +223,12 @@ class _FormPageState extends State<FormPage> {
           _showOTPInput = await NebuiaPlugin.generateOTPPhone;
         }
 
-        setState(() {
-
-        });
+        setState(() {});
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.green,
-          content: Text("OTP enviado a $_itemToValidate", style: TextStyle(color: Colors.white)),
+          content: Text("OTP enviado a $_itemToValidate",
+              style: TextStyle(color: Colors.white)),
         ));
       }
     }
@@ -233,22 +237,25 @@ class _FormPageState extends State<FormPage> {
   void _verifyOTP() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      bool status = widget.item == Verification.email ? await NebuiaPlugin.verifyOTPEmail(_OTP!) : await NebuiaPlugin.verifyOTPPhone(_OTP!);
+      bool status = widget.item == Verification.email
+          ? await NebuiaPlugin.verifyOTPEmail(_OTP!)
+          : await NebuiaPlugin.verifyOTPPhone(_OTP!);
       if (status) {
         FocusManager.instance.primaryFocus?.unfocus();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.green,
-          content: Text("Código otp correcto", style: TextStyle(color: Colors.white)),
+          content: Text("Código otp correcto",
+              style: TextStyle(color: Colors.white)),
         ));
 
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.of(context).pop();
         });
-
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: Colors.red,
-          content: Text("Código otp incorrecto", style: TextStyle(color: Colors.white)),
+          content: Text("Código otp incorrecto",
+              style: TextStyle(color: Colors.white)),
         ));
       }
     }
@@ -275,11 +282,14 @@ class _FormPageState extends State<FormPage> {
                   SizedBox(
                     width: 180,
                     height: 180,
-                    child: Image.asset('assets/images/digits_verifications.png'),
+                    child:
+                        Image.asset('assets/images/digits_verifications.png'),
                   ),
                   const SizedBox(height: 15.0),
                   Text(
-                    widget.item == Verification.email ? 'Ingresa una dirección de correo electrónico válida' : 'Ingresa el número de teléfono a verificar',
+                    widget.item == Verification.email
+                        ? 'Ingresa una dirección de correo electrónico válida'
+                        : 'Ingresa el número de teléfono a verificar',
                     style: const TextStyle(
                         color: Color(0xff040217),
                         fontWeight: FontWeight.w600,
@@ -296,9 +306,16 @@ class _FormPageState extends State<FormPage> {
                   const SizedBox(height: 10.0),
                   TextFormField(
                     decoration: InputDecoration(
-                        labelText: widget.item == Verification.email ? 'Correo electrónico' : 'Número de teléfono', hintText: widget.item == Verification.email ? '' : '+52 XXXXXXXXX'),
+                        labelText: widget.item == Verification.email
+                            ? 'Correo electrónico'
+                            : 'Número de teléfono',
+                        hintText: widget.item == Verification.email
+                            ? ''
+                            : '+52 XXXXXXXXX'),
                     keyboardType: TextInputType.emailAddress,
-                    validator: widget.item == Verification.email ? _validateEmail : _validatePhone,
+                    validator: widget.item == Verification.email
+                        ? _validateEmail
+                        : _validatePhone,
                     onSaved: (value) {
                       setState(() => _itemToValidate = value);
                     },

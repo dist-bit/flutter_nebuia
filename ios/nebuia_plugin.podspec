@@ -15,7 +15,7 @@ NebuIA Plugin
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'NebuIA', '~> 0.0.40'
+  s.dependency 'NebuIA', '~> 0.0.41'
   s.library = 'c++'
   s.static_framework = true
   s.platform = :ios, '13.0'
