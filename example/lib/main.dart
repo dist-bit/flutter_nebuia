@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
                         }),
                         _card(Icons.face, 'Prueba de vida',
                             'Verificación facial y prueba de vida', () async {
-                          bool? result = await NebuiaPlugin.faceLiveDetection;
+                          bool? result = await NebuiaPlugin.faceLiveDetection(false);
                         }),
                         _card(Icons.credit_card, 'Documento de identidad',
                             'Sube tu INE / Pasaporte', () async {

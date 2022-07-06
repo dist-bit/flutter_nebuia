@@ -49,9 +49,9 @@ class ActivityDelegate internal constructor(
         }
     }
 
-    fun faceLiveDetection(result: MethodChannel.Result) {
+    fun faceLiveDetection(showID: Boolean, result: MethodChannel.Result) {
         var response = false
-        nebuIA.faceLiveDetection {
+        nebuIA.faceLiveDetection(showID) {
             if(!response) {
                 result.success(true)
                 response = true

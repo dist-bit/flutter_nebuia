@@ -65,7 +65,10 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
         result.success(true)
       }
       "createReport" -> plugin.createReport(result)
-      "faceLiveDetection" -> plugin.faceLiveDetection(result)
+      "faceLiveDetection" -> {
+        val showID: Boolean = data["showID"] as Boolean
+        plugin.faceLiveDetection(showID, result)
+      }
       "fingerDetection" -> {
         val hand: Int = data["hand"] as Int
         val quality: Double = data["quality"] as Double
