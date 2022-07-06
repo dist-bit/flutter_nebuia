@@ -1,6 +1,6 @@
 name: nebuia_plugin
 description: NebuIA Plugin
-version: 0.0.58
+version: 0.0.59
 homepage: "https://nebuia.com"
 
 environment:
