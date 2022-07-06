@@ -73,7 +73,8 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             break
         case "faceLiveDetection":
             var response: Bool = false
-            SwiftNebuiaPlugin.nebuIA.faceProof {
+            let showID: Bool = data["showID"] as! Bool;
+            SwiftNebuiaPlugin.nebuIA.faceProof(useIDShow: showID) {
                 if(!response) {
                     result(true)
                     response = true
