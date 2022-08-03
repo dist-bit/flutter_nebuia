@@ -1,12 +1,12 @@
 PODS:
   - Cartography (3.1.0)
   - Flutter (1.0.0)
-  - NebuIA (0.0.46):
+  - NebuIA (0.0.48):
     - Cartography (~> 3.0)
     - NicoProgress
   - nebuia_plugin (0.0.1):
     - Flutter
-    - NebuIA (~> 0.0.46)
+    - NebuIA (~> 0.0.48)
   - NicoProgress (0.4.0)
 
 DEPENDENCIES:
@@ -28,8 +28,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Cartography: 1988b7578871a56c036e7af17195cb2190edf18c
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  NebuIA: 2d3e29f3cfa462fc3e79ba7039b02499027b91ad
-  nebuia_plugin: b49449458eb41f1df5f8d2590f0a24b66f12a8c7
+  NebuIA: 8209d4a3a70119bf9c6cad69d53ca2d205c1b22e
+  nebuia_plugin: cdc08d8c8d14bb3d172b3fdd4a06f3c18d8df905
   NicoProgress: 8e26d401623a1ba9456748b04b30183d5e212d25
 
 PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
