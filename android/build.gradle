@@ -26,7 +26,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,6 +48,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.github.dist-bit:nebuia_native_android:0.0.59'
+    implementation 'com.github.dist-bit:nebuia_native_android:0.0.62'
     implementation 'androidx.appcompat:appcompat:1.4.1'
 }
