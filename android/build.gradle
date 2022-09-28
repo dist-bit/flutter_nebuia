@@ -18,7 +18,10 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://jitpack.io"
+            credentials { username authNebuia }
+        }
     }
 }
 
@@ -48,6 +51,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.github.dist-bit:nebuia_native_android:0.0.62'
+    implementation 'com.github.dist-bit:nebuia_native_android:0.0.68'
     implementation 'androidx.appcompat:appcompat:1.4.1'
 }
