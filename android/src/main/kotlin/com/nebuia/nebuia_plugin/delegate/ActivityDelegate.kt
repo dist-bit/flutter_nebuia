@@ -96,6 +96,12 @@ class ActivityDelegate internal constructor(
         return fingers
     }
 
+    fun genericCapture(result: MethodChannel.Result) {
+        nebuIA.genericCapture() {
+            result.success(it)
+        }
+    }
+
     fun generateWSQFingerprint(image: ByteArray, result: MethodChannel.Result) {
         nebuIA.generateWSQFingerprint(image.toBitMap()) {
             result.success(it)
