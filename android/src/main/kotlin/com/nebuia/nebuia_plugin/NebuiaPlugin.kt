@@ -71,9 +71,8 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
       }
       "fingerDetection" -> {
         val hand: Int = data["hand"] as Int
-        val quality: Double = data["quality"] as Double
         val skip: Boolean = data["skip"] as Boolean
-        plugin.fingerDetection(hand, skip, quality, result)
+        plugin.fingerDetection(hand, skip, result)
       }
       "generateWSQFingerprint" -> {
         val image: ByteArray = data["image"] as ByteArray

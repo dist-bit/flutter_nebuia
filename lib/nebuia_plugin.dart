@@ -46,10 +46,9 @@ class NebuiaPlugin {
     return status;
   }
 
-  static Future<Fingers?> fingerDetection(
-      int hand, bool skipStep, num quality) async {
-    final result = await _channel.invokeMethod('fingerDetection',
-        {'hand': hand, 'skip': skipStep, 'quality': quality});
+  static Future<Fingers?> fingerDetection(int hand, bool skipStep) async {
+    final result = await _channel
+        .invokeMethod('fingerDetection', {'hand': hand, 'skip': skipStep});
 
     if (result.runtimeType.toString() == 'String') {
       return Fingers(null, null, null, null, true);

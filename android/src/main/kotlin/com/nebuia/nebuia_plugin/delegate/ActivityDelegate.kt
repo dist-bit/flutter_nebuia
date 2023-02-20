@@ -59,8 +59,8 @@ class ActivityDelegate internal constructor(
         }
     }
 
-    fun fingerDetection(hand: Int, skip: Boolean, quality: Double, result: MethodChannel.Result) {
-        nebuIA.fingerDetection(hand, skip, quality, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
+    fun fingerDetection(hand: Int, skip: Boolean, result: MethodChannel.Result) {
+        nebuIA.fingerDetection(hand, skip, onFingerDetectionComplete = { index, middle, ring, little: Fingers ->
             val fingers = buildFingers(index, middle, ring, little, false)
             result.success(fingers)
         }, onSkip = {
