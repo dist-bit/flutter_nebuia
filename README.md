@@ -41,23 +41,83 @@ Add `nebuia_plugin` to your project:
 nebuia_plugin: ^x.x.x
 ```
 
-For Android, add public and private keys to your `values.xml`:
+### Android
+
+Change the min SDK version to 24 on `android/app/build.gradle`:
+
+```gradle
+android {
+  defaultConfig {
+    minSdkVersion 24
+    ...
+  }
+  ...
+}
+```
+
+Add public and private keys to `android/app/src/main/res/values/values.xml`:
 
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="nebuia_public_key">S5PS103-RHWM8E8-*******-7GQ0NX1</string>
     <string name="nebuia_secret_key">c96d9080-c479-4439-****-b1523c2e0af4</string>
 </resources>
 ```
 
-For iOS, add public and private keys to your `Info.plist`:
+Add the following property to `android/gradle.properties` file:
+
+```gradle
+authNebuia=<your-code>
+```
+
+> Contact NebuIA support to get private keys, public keys and other authentication codes.
+
+### iOS
+
+Add public and private keys to your `Info.plist`:
 
 ```xml
-<key>NebuIAPublicKey</key>
-<string>S5PS103-RHWM8E8-*******-7GQ0NX1</string>
-<key>NebuIASecretKey</key>
-<string>c96d9080-c479-4439-****-b1523c2e0af4</string>
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+  <dict>
+    <key>NebuIAPublicKey</key>
+    <string>S5PS103-RHWM8E8-*******-7GQ0NX1</string>
+    <key>NebuIASecretKey</key>
+    <string>c96d9080-c479-4439-****-b1523c2e0af4</string>
+    ...
+  </dict>
+</plist>
+```
+
+Indicate iOS 13 as minimum iOS version on top of `ios/Podfile`:
+
+```rb
+platform :ios, '13.0'
+```
+
+Add the pod of NebuIA to `ios/Podfile`:
+
+```rb
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!
+
+  pod 'NebuIA', :git => 'https://github.com/dist-bit/nebuia_native_ios.git'
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  ...
+end
+```
+
+> Contact NebuIA support to get private keys, public keys and other authentication codes.
+
+### Troubleshooting
+
+Every time that NebuIA wants to be updated, the `ios/Podfile.lock` must be deleted and then in `ios` folder, run:
+
+```bash
+pod install
 ```
 
 ## Sample Integration
@@ -109,36 +169,45 @@ Uint8List? wsq = await NebuiaPlugin.generateWSQFingerprint(
   image,
 );
 
-// save email
-bool status = await NebuiaPlugin.saveEmail(email);
-// save phone
-bool status = await NebuiaPlugin.savePhone(phone);
-// send OTP email
-bool status = await NebuiaPlugin.generateOTPEmail;
-// send OTP phone
-bool status = await NebuiaPlugin.generateOTPPhone;
-// verify OTP email
-bool status = await NebuiaPlugin.verifyOTPEmail(code);
+// Save email to generate an OTP later.
+final bool wasSuccessful = await NebuiaPlugin.saveEmail(
+  email,
+);
+// Send OTP to saved email.
+final bool wasSent = await NebuiaPlugin.generateOTPEmail;
+// Verify OTP sent to email.
+final bool isValid = await NebuiaPlugin.verifyOTPEmail(
+  code,
+);
+
+// Save phone to generate an OTP later.
+final bool wasSuccessful = await NebuiaPlugin.savePhone(
+  phone,
+);
+// Send OTP to saved phone.
+final bool wasSent = await NebuiaPlugin.generateOTPPhone;
 // verify OTP phone
-bool status = await NebuiaPlugin.verifyOTPPhone(code);
+final bool isValid = await NebuiaPlugin.verifyOTPPhone(
+  code,
+);
 
-// Generate record
-String? path = await NebuiaPlugin.recordActivity(text);
+// Generate record.
+final String? path = await NebuiaPlugin.recordActivity(
+  text,
+);
 
-// get face image
-Uint8List? face = NebuiaPlugin.getFaceImage;
+// Get face image.
+final Uint8List? face = NebuiaPlugin.getFaceImage;
 
-// get ID front image
-Uint8List? face = NebuiaPlugin.getIDFrontImage;
-// get ID back image
-Uint8List? face = NebuiaPlugin.getIDBackImage;
+// Get ID front image.
+final Uint8List? face = NebuiaPlugin.getIDFrontImage;
+// Get ID back image.
+final Uint8List? face = NebuiaPlugin.getIDBackImage;
 ```
 
-### Notes
+## Address validation flow sample
 
-##### Address validation flow sample
-
-Address model sample - generated with josn serializer
+Address model sample - generated with JSON serializer.
 
 ```dart
 LinkedHashMap? _address = await NebuiaPlugin.captureAddressProof;
@@ -328,10 +397,12 @@ class ZoneAddress extends BaseNetworkModel<ZoneAddress> {
 
 ```
 
-##### Fingerprint
+## Fingerprint
 
 On fingerprint scanner end you can pass any finger image to get WSQ File.
 
 ```dart
-await NebuiaPlugin.generateWSQFingerprint(image);
+await NebuiaPlugin.generateWSQFingerprint(
+  image,
+);
 ```
