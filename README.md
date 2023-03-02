@@ -1,44 +1,48 @@
-# nebuia
+# NebuIA
 
 [![N|Nebula](https://i.ibb.co/DC46xJv/banner-min.png)](https://nebuia.com)
-### Introduction
 
-NebuIA Native Core is library for nebuia services integration. NebuIA use platform native channels and run over native
-languages Objective-C for IOS and Kotlin/Java for Android
+## Introduction
 
-NebuIA is an Deep Learning library and supports
-  - Face Detection and auto crop
-  - Proof of Live in real time
-    - Darkened images
-    - Office fluorescent lighting
-    - Office with lighting turned off, illuminated only by natural sunlight
-    - Supported attacks
-      - Print
-      - 2D Mask
-      - 2 Replay
-  - Document Detection in real time
-    - Faster and best accuracy than conventional ID Detector (95%)
-    - Support auto cropping
-  - Proof of Address
-    - Automatic extract address
-  - Tipical OTP Verifications for Email and Phone Number SMS
-    - Time-Based One-Time Password (TOTP)
-    - HMAC-Based One-Time Password (HOTP)
-    * [RFC 4226: "RFC 4226 HOTP: An HMAC-Based One-Time Password Algorithm"](https://www.ietf.org/rfc/rfc4226.txt)
-    * [RFC 6238: "TOTP: Time-Based One-Time Password Algorithm"](https://tools.ietf.org/html/rfc6238)
+NebuIA Native Core is a library for NebuIA services integration. NebuIA use platform native channels and run over native
+languages Objective-C for iOS and Kotlin/Java for Android.
 
+NebuIA is a Deep Learning library and supports:
 
-### Requirements
- - Flutter 2 - Null safety
+- Face detection and auto crop
+- Proof of life in real time
+  - Darkened images
+  - Office fluorescent lighting
+  - Office with lighting turned off, illuminated only by natural sunlight
+  - Supported attacks
+    - Printing
+    - 2D Mask
+    - 2 Replay
+- Document detection in real time
+  - Faster and best accuracy than conventional ID Detector (95%)
+  - Supports auto cropping
+- Proof of address
+  - Automatic address extraction
+- Typical OTP verifications for email and phone number via SMS
+  - Time-Based One-Time Password (TOTP)
+  - HMAC-Based One-Time Password (HOTP)
+  * [RFC 4226: "RFC 4226 HOTP: An HMAC-Based One-Time Password Algorithm"](https://www.ietf.org/rfc/rfc4226.txt)
+  * [RFC 6238: "TOTP: Time-Based One-Time Password Algorithm"](https://tools.ietf.org/html/rfc6238)
 
-### Integration
+## Requirements
 
-In your pubspec.yaml level app
+- Flutter 2 - Null safety
+
+## Integration
+
+Add `nebuia_plugin` to your project:
+
 ```yaml
-    nebuia_plugin: ^x.x.x
+nebuia_plugin: ^x.x.x
 ```
 
-Add public and private key to your values.xml
+For Android, add public and private keys to your `values.xml`:
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
@@ -47,7 +51,8 @@ Add public and private key to your values.xml
 </resources>
 ```
 
-Add public and private key to your Info.plist
+For iOS, add public and private keys to your `Info.plist`:
+
 ```xml
 <key>NebuIAPublicKey</key>
 <string>S5PS103-RHWM8E8-*******-7GQ0NX1</string>
@@ -55,38 +60,54 @@ Add public and private key to your Info.plist
 <string>c96d9080-c479-4439-****-b1523c2e0af4</string>
 ```
 
-Sample Integration
+## Sample Integration
+
 ```dart
 import 'package:nebuia_plugin/nebuia_plugin.dart';
 
-// set client endpoint (only if you need custom client installation) - omit for default services
- NebuiaPlugin.setClientURI = 'https://my.endpoint.com/api/v1/services';
-// call your service for temporal code generation
-// code is response number string
+// Set client endpoint (only if you need custom client installation) - omit for default services.
+NebuiaPlugin.setClientURI = 'https://my.endpoint.com/api/v1/services';
+
+// Call your service for temporal code generation.
+// Code is response number string.
 NebuiaPlugin.setTemporalCode = code;
 
-// create new report
-String? generatedReport = await NebuiaPlugin.createReport;
-// store generatedReport in your databse for future usage
-// if you already have a report set this with
+// Create a new report.
+// Store `generatedReport` in your database for future usage.
+final String? generatedReport = await NebuiaPlugin.createReport;
+
+// If you already have a report:
 NebuiaPlugin.setReport = generatedReport;
 
+// Scan Mexican ID/passport.
+final bool wasSuccessful = await NebuiaPlugin.documentDetection;
 
-// Scan Mexian ID/Passport
-bool status = await NebuiaPlugin.documentDetection;
+// Face spoofing test.
+final bool? wasSuccessful = await NebuiaPlugin.faceLiveDetection;
 
-// Face spoofing test
-bool? status = await NebuiaPlugin.faceLiveDetection;
+// Scan proof of address.
+// The result is a `LinkedHashMap` containing all extracted data from
+// the address proof sheet.
+final LinkedHashMap? address = await NebuiaPlugin.captureAddressProof;
 
-// Scan proof of address
-LinkedHashMap? address = await NebuiaPlugin.captureAddressProof;
-// Save address - custom address to verify
-LinkedHashMap? address = await NebuiaPlugin.saveAddress(address);
+// Save the desired address to NebuIA services.
+final LinkedHashMap? address = await NebuiaPlugin.saveAddress(
+  address,
+);
 
-// Scan 4 fingers - hand 0 left / 1 right
-Fingers? fingers = await NebuiaPlugin.fingerDetection(hand);
-// Generate WSQ from fingerprint - image is in Uint8List
-Uint8List? wsq = await NebuiaPlugin.generateWSQFingerprint(image);
+// Scan hand fingers.
+// Left hand: 0.
+// Right hand: 1.
+Fingers? fingers = await NebuiaPlugin.fingerDetection(
+  0,
+  false,
+);
+
+// Generate WSQ from fingerprint.
+// The generated image is returned in bytes.
+Uint8List? wsq = await NebuiaPlugin.generateWSQFingerprint(
+  image,
+);
 
 // save email
 bool status = await NebuiaPlugin.saveEmail(email);
@@ -112,7 +133,6 @@ Uint8List? face = NebuiaPlugin.getIDFrontImage;
 // get ID back image
 Uint8List? face = NebuiaPlugin.getIDBackImage;
 ```
-
 
 ### Notes
 
@@ -307,10 +327,11 @@ class ZoneAddress extends BaseNetworkModel<ZoneAddress> {
 }
 
 ```
+
 ##### Fingerprint
 
 On fingerprint scanner end you can pass any finger image to get WSQ File.
+
 ```dart
 await NebuiaPlugin.generateWSQFingerprint(image);
 ```
-
