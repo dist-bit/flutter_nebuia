@@ -54,12 +54,12 @@ class NebuiaPlugin {
   }
 
   static Future<bool?> faceLiveDetection({
-    required bool showID,
+    required bool showId,
   }) async {
     final status = await _channel.invokeMethod<bool>(
       'faceLiveDetection',
       {
-        'showID': showID,
+        'showID': showId,
       },
     );
     return status;
