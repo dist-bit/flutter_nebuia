@@ -121,7 +121,8 @@ class _MyAppState extends State<MyApp> {
                         }),
                         _card(Icons.face, 'Prueba de vida',
                             'Verificación facial y prueba de vida', () async {
-                          bool? result = await NebuiaPlugin.faceLiveDetection(false);
+                          bool? result = await NebuiaPlugin.faceLiveDetection(
+                              showId: false);
                         }),
                         _card(Icons.credit_card, 'Documento de identidad',
                             'Sube tu INE / Pasaporte', () async {
@@ -139,8 +140,8 @@ class _MyAppState extends State<MyApp> {
                         }),
                         _card(Icons.fingerprint, 'Huellas dactilares',
                             'Escanea tus huellas dactilares', () async {
-                          Fingers? fingers =
-                              await NebuiaPlugin.fingerDetection(0, false, 5.0);
+                          Fingers? fingers = await NebuiaPlugin.fingerDetection(
+                              hand: 0, skipStep: false);
                           if (fingers != null) {
                             //print(address);
                           }
@@ -214,8 +215,8 @@ class _FormPageState extends State<FormPage> {
       _formKey.currentState!.save();
 
       bool status = widget.item == Verification.email
-          ? await NebuiaPlugin.saveEmail(_itemToValidate!)
-          : await NebuiaPlugin.savePhone(_itemToValidate!);
+          ? await NebuiaPlugin.saveEmail(email: _itemToValidate!)
+          : await NebuiaPlugin.savePhone(phone: _itemToValidate!);
       if (status) {
         if (widget.item == Verification.email) {
           _showOTPInput = await NebuiaPlugin.generateOTPEmail;
@@ -238,8 +239,8 @@ class _FormPageState extends State<FormPage> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       bool status = widget.item == Verification.email
-          ? await NebuiaPlugin.verifyOTPEmail(_OTP!)
-          : await NebuiaPlugin.verifyOTPPhone(_OTP!);
+          ? await NebuiaPlugin.verifyOTPEmail(code: _OTP!)
+          : await NebuiaPlugin.verifyOTPPhone(code: _OTP!);
       if (status) {
         FocusManager.instance.primaryFocus?.unfocus();
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
