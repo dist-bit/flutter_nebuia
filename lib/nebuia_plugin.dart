@@ -285,4 +285,14 @@ class NebuiaPlugin {
 
     return data!;
   }
+
+  static Future<LinkedHashMap> get getSignatureTemplates async {
+    final data = await _channel.invokeMethod<LinkedHashMap>(
+      'getSignatureTemplates',
+      {},
+    );
+
+    print(getSignatureTemplates);
+    return data!;
+  }
 }

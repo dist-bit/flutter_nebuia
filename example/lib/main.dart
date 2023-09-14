@@ -26,7 +26,9 @@ class _MyAppState extends State<MyApp> {
     NebuiaPlugin.setTemporalCode = "000000";
     // SET CLIENT REPORT
     //nebuIA.setReport("62422330ad9791096fd9c4fe")
-    NebuiaPlugin.setReport = "62422330ad9791096fd9c4fe";
+    NebuiaPlugin.setReport = "63ee761a6e1a6b708a575968";
+
+    NebuiaPlugin.getSignatureTemplates;
   }
 
   Widget _card(

@@ -6,6 +6,30 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
     
     static var nebuIA: NebuIA!
     
+    struct KeyToFill {
+        let description: String
+        let place: Place
+        let label: String
+        let key: String
+    }
+
+    struct Place {
+        let w: Double
+        let x: Double
+        let h: Double
+        let y: Double
+        let page: Int
+    }
+
+    public struct Template {
+        let keysToFill: [KeyToFill]
+        let name: String
+        let signsTypes: [String]
+        let description: String
+        public let id: String
+        let requiresKYC: Bool
+    }
+    
     private func buildFingers(index: Finger, middle: Finger, ring: Finger, little: Finger, isSkip: Bool) -> [String : Any] {
         let index: [String : Any] = [
             "image": FlutterStandardTypedData(bytes: index.image!.jpegData(compressionQuality: 1.0)!),
@@ -38,13 +62,44 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
         return fingers
     }
     
+    func keyToFillToDictionary(keyToFill: KeyToFill) -> [String: Any] {
+        let placeDict: [String: Any] = [
+            "w": keyToFill.place.w,
+            "x": keyToFill.place.x,
+            "h": keyToFill.place.h,
+            "y": keyToFill.place.y,
+            "page": keyToFill.place.page
+        ]
+        
+        return [
+            "description": keyToFill.description,
+            "place": placeDict,
+            "label": keyToFill.label,
+            "key": keyToFill.key
+        ]
+    }
+
+    // Función para convertir un objeto Template en un diccionario
+    func templateToDictionary(template: Template) -> [String: Any] {
+        let keysToFillArray = template.keysToFill.map { keyToFillToDictionary(keyToFill: $0) }
+        
+        return [
+            "keysToFill": keysToFillArray,
+            "name": template.name,
+            "signsTypes": template.signsTypes,
+            "description": template.description,
+            "id": template.id,
+            "requiresKYC": template.requiresKYC
+        ]
+    }
+    
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "nebuia_plugin", binaryMessenger: registrar.messenger())
         let instance = SwiftNebuiaPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         let controller : FlutterViewController = UIApplication.shared.delegate?.window??.rootViewController as! FlutterViewController
-        nebuIA = NebuIA(controller: controller)
+        nebuIA = NebuIA()
         
     }
     
@@ -184,6 +239,19 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
                 result(data)
             }
             break
+            
+        case "getSignatureTemplates":
+            SwiftNebuiaPlugin.nebuIA.getSignatureTemplates { data in
+                var dictionariesArray: [[String: Any]] = []
+                for item in data {
+                    let templateDict = self.templateToDictionary(template: item as! Template)
+                    dictionariesArray.append(templateDict)
+                }
+                
+                result(dictionariesArray)
+            }
+            break
+            
         default:
             result("Have you done something new?")
         }

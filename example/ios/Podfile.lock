@@ -1,12 +1,12 @@
 PODS:
   - Cartography (3.1.0)
   - Flutter (1.0.0)
-  - NebuIA (0.0.48):
+  - NebuIA (0.0.93):
     - Cartography (~> 3.0)
     - NicoProgress
   - nebuia_plugin (0.0.1):
     - Flutter
-    - NebuIA (~> 0.0.48)
+    - NebuIA (~> 0.0.93)
   - NicoProgress (0.4.0)
 
 DEPENDENCIES:
@@ -14,10 +14,11 @@ DEPENDENCIES:
   - nebuia_plugin (from `.symlinks/plugins/nebuia_plugin/ios`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Cartography
-    - NebuIA
     - NicoProgress
+  https://github.com/NebuIA-ID/NebuIA-Specs.git:
+    - NebuIA
 
 EXTERNAL SOURCES:
   Flutter:
@@ -28,10 +29,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Cartography: 1988b7578871a56c036e7af17195cb2190edf18c
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  NebuIA: 8209d4a3a70119bf9c6cad69d53ca2d205c1b22e
-  nebuia_plugin: cdc08d8c8d14bb3d172b3fdd4a06f3c18d8df905
+  NebuIA: 0f33871fdc5c8f931107c38e41953511024cd524
+  nebuia_plugin: 64e0dc71b67f94ce2327c5d9ee615b46dd3cd832
   NicoProgress: 8e26d401623a1ba9456748b04b30183d5e212d25
 
-PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
+PODFILE CHECKSUM: d5a73e0c04356cc4999fd9320f105446179f5eff
 
 COCOAPODS: 1.11.3

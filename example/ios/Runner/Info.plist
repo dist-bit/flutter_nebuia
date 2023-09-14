@@ -31,9 +31,9 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Necesitamos acceder a tu galeria para que puedas escoger tu imagen de perfil</string>
 	<key>NebuIAPublicKey</key>
-	<string>0T7ZKDX-0XSTHRM-2SQ1MFK-006R6HD</string>
+	<string>15PST2B-3WSJGAM-2EJ8TWE-1FPDH2A</string>
 	<key>NebuIASecretKey</key>
-	<string>347fcdbd-3b9d-4714-b370-d1f3006c1a2d</string>
+	<string>4b6ce84b-f999-4154-9d24-6b8e5f66c44a</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -52,6 +52,10 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
 </plist>
