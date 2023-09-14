@@ -286,13 +286,27 @@ class NebuiaPlugin {
     return data!;
   }
 
-  static Future<LinkedHashMap> get getSignatureTemplates async {
-    final data = await _channel.invokeMethod<LinkedHashMap>(
+  static Future<List> get getSignatureTemplates async {
+    final data = await _channel.invokeMethod<List>(
       'getSignatureTemplates',
       {},
     );
+    return data!;
+  }
 
-    print(getSignatureTemplates);
+  static Future<bool> signDocument({
+    required String documentId,
+    required String email,
+    required Map<String, String> params,
+  }) async {
+    final data = await _channel.invokeMethod<bool>(
+      'signDocument',
+      {
+        "documentId": documentId,
+        "email": email,
+        "params": params,
+      },
+    );
     return data!;
   }
 }

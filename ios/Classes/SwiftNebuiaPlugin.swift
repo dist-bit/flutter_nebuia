@@ -6,29 +6,6 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
     
     static var nebuIA: NebuIA!
     
-    struct KeyToFill {
-        let description: String
-        let place: Place
-        let label: String
-        let key: String
-    }
-
-    struct Place {
-        let w: Double
-        let x: Double
-        let h: Double
-        let y: Double
-        let page: Int
-    }
-
-    public struct Template {
-        let keysToFill: [KeyToFill]
-        let name: String
-        let signsTypes: [String]
-        let description: String
-        public let id: String
-        let requiresKYC: Bool
-    }
     
     private func buildFingers(index: Finger, middle: Finger, ring: Finger, little: Finger, isSkip: Bool) -> [String : Any] {
         let index: [String : Any] = [
@@ -244,11 +221,30 @@ public class SwiftNebuiaPlugin: NSObject, FlutterPlugin {
             SwiftNebuiaPlugin.nebuIA.getSignatureTemplates { data in
                 var dictionariesArray: [[String: Any]] = []
                 for item in data {
-                    let templateDict = self.templateToDictionary(template: item as! Template)
+                    
+                    let templateDict = self.templateToDictionary(template: item)
                     dictionariesArray.append(templateDict)
                 }
                 
                 result(dictionariesArray)
+            }
+            break
+            
+        case "signDocument":
+            let documentId: String = data["documentId"] as! String;
+            let email: String = data["email"] as! String;
+            let data = data["params"] as! Dictionary<String, String>;
+            
+            var stringDictionary = data.mapValues { value in
+                if let stringValue = value as? String {
+                    return stringValue
+                } else {
+                    return String(describing: value)
+                }
+            }
+            
+            SwiftNebuiaPlugin.nebuIA.signDocument(documentId: documentId, email: email, params: &stringDictionary) { status in
+               result(status)
             }
             break
             

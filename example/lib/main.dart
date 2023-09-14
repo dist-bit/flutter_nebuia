@@ -28,7 +28,11 @@ class _MyAppState extends State<MyApp> {
     //nebuIA.setReport("62422330ad9791096fd9c4fe")
     NebuiaPlugin.setReport = "63ee761a6e1a6b708a575968";
 
-    NebuiaPlugin.getSignatureTemplates;
+    //NebuiaPlugin.getSignatureTemplates;
+    NebuiaPlugin.signDocument(
+        documentId: "64fce684ff9d44fcc700f00b",
+        email: "miguel@distbit.io",
+        params: {"key_value_one": "Valor1", "rfc_user": "RFC USERR"});
   }
 
   Widget _card(
