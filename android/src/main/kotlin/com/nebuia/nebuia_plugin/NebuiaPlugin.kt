@@ -112,6 +112,13 @@ class NebuiaPlugin: MethodCallHandler, ActivityAware, FlutterPlugin {
       "getIDBackImage" -> plugin.getIDBackImage(result)
       "getReportData" -> plugin.getReportData(result)
       "genericCapture" -> plugin.genericCapture(result)
+      "getSignatureTemplates" -> plugin.getSignatureTemplates(result)
+      "signDocument" -> {
+        val documentId: String = data["documentId"] as String
+        val email: String = data["email"] as String
+        val params: Map<String, String> = data["params"] as Map<String, String>
+        plugin.signDocument(documentId, email, params, result)
+      }
       else -> result.notImplemented()
     }
   }

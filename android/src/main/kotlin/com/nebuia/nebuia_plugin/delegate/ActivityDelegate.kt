@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory.*
 import com.distbit.nebuia_plugin.model.Side
 import com.distbit.nebuia_plugin.model.ui.Theme
 import com.distbit.nebuia_plugin.model.Fingers
+import com.distbit.nebuia_plugin.model.sign.KeyToFill
+import com.distbit.nebuia_plugin.model.sign.Template
 import java.io.ByteArrayOutputStream
 
 
@@ -17,7 +19,38 @@ class ActivityDelegate internal constructor(
         private val activity: Activity
 ) : PluginRegistry.ActivityResultListener {
 
+    private fun keyToFillToMap(keyToFill: KeyToFill): Map<String, Any> {
+        val placeMap = mapOf(
+            "w" to keyToFill.place.w,
+            "x" to keyToFill.place.x,
+            "h" to keyToFill.place.h,
+            "y" to keyToFill.place.y,
+            "page" to keyToFill.place.page
+        )
+
+        return mapOf(
+            "description" to keyToFill.description,
+            "place" to placeMap,
+            "label" to keyToFill.label,
+            "key" to keyToFill.key
+        )
+    }
+
+    private fun templateToMap(template: Template): Map<String, Any> {
+        val keysToFillList = template.keysToFill.map { keyToFillToMap(it) }
+
+        return mapOf(
+            "keysToFill" to keysToFillList,
+            "name" to template.name,
+            "signsTypes" to template.signsTypes,
+            "description" to template.description,
+            "id" to template.id,
+            "requiresKYC" to template.requiresKYC
+        )
+    }
+
     private var nebuIA: NebuIA = NebuIA(this.activity)
+    private var signature:  NebuIA.NebuIASigner
 
     init {
         NebuIA.theme = Theme(
@@ -29,6 +62,8 @@ class ActivityDelegate internal constructor(
                 //normalFont = ResourcesCompat.getFont(this, R.font.gilroy_medium),
                 //thinFont = ResourcesCompat.getFont(this, R.font.gilroy_light)
         )
+
+        signature = nebuIA.NebuIASigner()
     }
 
     fun setClientURI(uri: String) {
@@ -198,6 +233,24 @@ class ActivityDelegate internal constructor(
         nebuIA.getIDData {
             result.success(it)
         }
+    }
+
+    fun getSignatureTemplates(result: MethodChannel.Result) {
+        signature.getSignTemplates {
+            val items = mutableListOf<Map<String, Any>>()
+            for(template in it) {
+                items.add(templateToMap(template))
+            }
+
+            result.success(items)
+        }
+    }
+
+    fun signDocument(documentId: String, email: String, params: Map<String, String>, result: MethodChannel.Result) {
+        val mutableParams: MutableMap<String, String> = params.toMutableMap()
+        signature.signDocument(documentId, email, mutableParams, onDocumentSign = {
+            result.success(it)
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
