@@ -29,7 +29,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
+    if (project.android.hasProperty('namespace')) {
+        namespace 'com.nebuia.nebuia_plugin'
+    }
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
